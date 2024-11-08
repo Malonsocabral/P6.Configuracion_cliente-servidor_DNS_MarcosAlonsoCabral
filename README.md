@@ -48,7 +48,6 @@ Este ficheiro configura un servidor DNS `(asir_bind9)` accesible desde un client
 Para lanzar este .yml debemos facer `docker compose up -d` no directorio do yaml
 >[!NOTE]
 >Cabe destacar que temos que crear os arquivos `/conf/namedconf` e poñer a informacion necesaria para o funcionamento  
-
 >E tamen ten que quedar claro que o ficheiro `zonas` é para que despois ao facer o `dig`, poder comprobar se as peticions que facemos dende o contenedor alpine responden correctamente ou non.  
 >(Ademais tamen creei unha zona llamada `prob`.)
 
@@ -56,7 +55,8 @@ Para lanzar este .yml debemos facer `docker compose up -d` no directorio do yaml
 
 Para instalar o necesario no cliente de alpine primeiro debemos facer un `docker exec -it cliente /bin/sh` para entrar no sh do cliente.  
 Unha vez no cliente debemos facer un `apk update && apk add bind-tools` para asi poder instalar o dig e as demais ferreamentas (Usamos apk xa que e mediante sh). 
-Logo xa podemos facer diferentes consultas con dig como a de  `dig @172.28.5.1 test.asircastelao.int` e todas as demais que aparecen no filleiro zonas.
+  
+  Logo xa podemos facer diferentes consultas con dig como a de  `dig @172.28.5.1 test.asircastelao.int` e todas as demais que aparecen no filleiro zonas.
 
 ## Configura o cliente para que o seu DNS sexa o otro container, modificando el resolv.conf ou usando o fichero docker-compose.yml (preferible). Compróbao con 'dig'.
 Para configura o cliente realmente non temos que facer nada xa que a ip do contenedor dns que no noso caso e un bind9 de ubuntu é `172.28.5.1` e a ip que ten por defecto no yaml o sistema do cliente alpine para responder as peticions dns e a `172.28.5.1`. 
