@@ -46,17 +46,20 @@ networks:
 
 Este ficheiro configura un servidor DNS (asir_bind9) accesible desde un cliente (cliente) na mesma subrede.  
 Para lanzar este .yml debemos facer `docker compose up -d` no directorio do yaml
->NOTE
+>[!NOTE]
 >Cabe destacar que temos que crear os arquivos `/conf/namedconf` e poñer a informacion necesaria para o funcionamento
 >E tamen ten que quedar claro que o ficheiro zonas e para que despois ao facer o dig poder comprobar se as peticions que facemos dende o contenedor alpine esta responden correctamente ou non.(Ademais tamen creei unha zona llamada prob.)
 
 ## Instala, se é preciso, os paquetes que precises para usar no cliente os comando de rede do seguinte enlace.Comproba o seu uso.Fai a instalación de dig se é preciso.
 
-Para instalar o necesario no cliente de alpine primeiro debemos facer un `docker exec -it cliente /bin/sh` para entrar no sh do cliente y ahi facer un `apk update && apk add bind-tools` para asi poder instalar o dig e as demais ferreamentas.  
+Para instalar o necesario no cliente de alpine primeiro debemos facer un `docker exec -it cliente /bin/sh` para entrar no sh do cliente y ahi facer un `apk update && apk add bind-tools` para asi poder instalar o dig e as demais ferreamentas.(Usamos apk xa que e mediante sh)  
 Logo xa podemos facer diferentes consultas con dig como a de  `dig @172.28.5.1 test.asircastelao.int` e todas as demais que aparecen no filleiro zonas.
 
 ## Configura o cliente para que o seu DNS sexa o otro container, modificando el resolv.conf ou usando o fichero docker-compose.yml (preferible). Compróbao con 'dig'.
-Para configura o cliente realmente non temos que facer nada xa que a ip do contenedor dns que no noso caso e un bind9 de ubuntu é `172.28.5.1` e a ip que ten por defecto no yaml o sistema do cliente alpine para responder as peticions dns e a `172.28.5.1`. E dicir que no noso cliente alpine poderiamos poner que o resolutor dns fose o 8.8.8.8 que seria google pero temos configurado no yaml anterior que esas peticions se envien a 172.28.5.1 a cal e a ip do bind9.  
+Para configura o cliente realmente non temos que facer nada xa que a ip do contenedor dns que no noso caso e un bind9 de ubuntu é `172.28.5.1` e a ip que ten por defecto no yaml o sistema do cliente alpine para responder as peticions dns e a `172.28.5.1`. 
+>[!NOTE]
+>E dicir que no noso cliente alpine poderiamos poner que o resolutor dns fose o 8.8.8.8 que seria google pero temos configurado no yaml anterior que esas peticions se envien a 172.28.5.1 a cal e a ip do bind9.  
+
 Agora alguns exemplos do dig, poden ser os seguintes (non fai falta o @172.28.5.1 xa que o yaml o especifica, pero para que se vea dunha manera mais visual, prefiro escribilo):   
  ```
 dig @172.28.5.1 test.asircastelao.int
